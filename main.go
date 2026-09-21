@@ -11,13 +11,14 @@ import (
 )
 
 type Status struct {
-	Id      uint8   `json:"id"`
-	Source  string  `json:"source"`
-	Output  bool    `json:"output"`
-	Apower  float32 `json:"apower"`
-	Voltage float32 `json:"voltage"`
-	Current float32 `json:"current"`
-	Aenergy struct {
+	TimeStamp time.Time `json:"timestamp"`
+	Id        uint8     `json:"id"`
+	Source    string    `json:"source"`
+	Output    bool      `json:"output"`
+	Apower    float32   `json:"apower"`
+	Voltage   float32   `json:"voltage"`
+	Current   float32   `json:"current"`
+	Aenergy   struct {
 		Total float64 `json:"total"`
 	} `json:"aenergy"`
 	Temperature struct {
@@ -54,6 +55,7 @@ func pollShelly() {
 		return
 	}
 	log.Info("Shelly Status", "power", status.Apower, "voltage", status.Voltage, "tempC", status.Temperature.TC)
+	status.TimeStamp = time.Now()
 	statusJSON, err := json.Marshal(status)
 	if err != nil {
 		log.Error("Marshal", "error", err)
@@ -61,7 +63,7 @@ func pollShelly() {
 	}
 	stringJson := string(statusJSON)
 	log.Debug(stringJson)
-	err = saveToFile(stringJson)
+	err = saveToFile(status)
 	if err != nil {
 		log.Error("saveToFile", "error", err)
 		return
