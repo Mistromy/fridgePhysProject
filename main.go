@@ -2,7 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
+	"os"
 	"time"
 
 	"charm.land/log/v2"
@@ -29,7 +31,7 @@ const SHELLYADDRESS = "http://192.168.33.1/rpc/Switch.GetStatus?id=0"
 func main() {
 	for {
 		pollShelly()
-		time.Sleep(time.Second)
+		time.Sleep(1 * time.Second)
 	}
 }
 
@@ -39,7 +41,12 @@ func pollShelly() {
 		log.Error("HTTP Get", "error", err)
 		return
 	}
-	defer answer.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			log.Error("Body Close", "error", err)
+		}
+	}(answer.Body)
 
 	var status Status
 	if err := json.NewDecoder(answer.Body).Decode(&status); err != nil {
@@ -47,4 +54,30 @@ func pollShelly() {
 		return
 	}
 	log.Info("Shelly Status", "power", status.Apower, "voltage", status.Voltage, "tempC", status.Temperature.TC)
+	statusJSON, err := json.Marshal(status)
+	if err != nil {
+		log.Error("Marshal", "error", err)
+		return
+	}
+	stringJson := string(statusJSON)
+	log.Debug(stringJson)
+	err = saveToFile(stringJson)
+	if err != nil {
+		log.Error("saveToFile", "error", err)
+		return
+	}
+}
+
+func saveToFile(v any) error {
+	f, err := os.OpenFile("dump.jsonl", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+			log.Error("Close", "error", err)
+		}
+	}(f)
+	return json.NewEncoder(f).Encode(v)
 }
