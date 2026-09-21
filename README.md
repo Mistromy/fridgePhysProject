@@ -1,6 +1,8 @@
 # Code for my Leaving Cert Physics project
 ### "Energy efficiency in household enviornment"
 
+shelly portal: http://192.168.33.1/#/
+
 [shellydoc.md](shellydoc.md) 
 
 output example:
@@ -28,6 +30,16 @@ output example:
 {"timestamp":"2026-09-21T20:03:27.5356859+01:00","id":0,"source":"WS_in","output":true,"apower":0,"voltage":243.4,"current":0,"aenergy":{"total":0.016},"temperature":{"tC":36.2,"tF":97.1}}
 
 ```
+
+# Instructions:
+1. Install latest binary from [releases](https://github.com/Mistromy/fridgePhysProject/releases)  
+    - in releases fine latest tag
+    - click on assets
+    - download the .exe file. likely `meter.exe`
+2. Connect your device to the Shelly Plug's network
+    - make sure the shelly is plugged in, and in your device's wifi settings find a wifi called ShellyPlusPlugUK and connect
+3. Run the .exe file. Windows will show a popup saying the program is untrusted. click i know what im doing / read more and click run anyways
+4. the program will start printing info to the terminal while simultaneously saving the data to a file next to the .exe
 
 # TODO:
 - put data into VictoriaMetrics
