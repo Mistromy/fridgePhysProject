@@ -30,9 +30,10 @@ type Status struct {
 const SHELLYADDRESS = "http://192.168.33.1/rpc/Switch.GetStatus?id=0"
 
 func main() {
-	for {
+	ticker := time.NewTicker(time.Second)
+	defer ticker.Stop()
+	for range ticker.C {
 		pollShelly()
-		time.Sleep(1 * time.Second)
 	}
 }
 
@@ -56,13 +57,6 @@ func pollShelly() {
 	}
 	log.Info("Shelly Status", "power", status.Apower, "voltage", status.Voltage, "tempC", status.Temperature.TC)
 	status.TimeStamp = time.Now()
-	statusJSON, err := json.Marshal(status)
-	if err != nil {
-		log.Error("Marshal", "error", err)
-		return
-	}
-	stringJson := string(statusJSON)
-	log.Debug(stringJson)
 	err = saveToFile(status)
 	if err != nil {
 		log.Error("saveToFile", "error", err)
