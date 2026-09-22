@@ -30,6 +30,16 @@ output example:
 {"timestamp":"2026-09-21T20:03:27.5356859+01:00","id":0,"source":"WS_in","output":true,"apower":0,"voltage":243.4,"current":0,"aenergy":{"total":0.016},"temperature":{"tC":36.2,"tF":97.1}}
 
 ```
+# Explained
+- **voltage** - RMS voltage, volts
+- **current** - RMS current, amps
+- **apower** - active power in watts. (the actual number that means something)
+- **aenergy.total** - cumulative energy
+- **output** - relay status
+- **temperature** - temperature of the plug
+- **id** - channel number. zero here because there is one plug
+- **source** - what last changed the relay: `WS_in` means the web UI, `init` is plug auto on, on plug-in. or can be `button` for the button on the switch
+
 
 # Instructions:
 1. Install latest binary from [releases](https://github.com/Mistromy/fridgePhysProject/releases)  
@@ -41,12 +51,12 @@ output example:
 3. Run the .exe file. Windows will show a popup saying the program is untrusted. click i know what im doing / read more and click run anyways
 4. the program will start printing info to the terminal while simultaneously saving the data to a file next to the .exe
 
-# For live display:
-- grafana enterprise can be ran as a standalone portable without install (port 3000)
-- victoriametrics is a single binary acting as a prometheus datasource
-- NetData can be a lighter, simpler alternative to grafana. smaller download but im less familiar with it.
+# Live Display:
+graphana showing data from victoriametrics
+![grafanascreenshot.png](grafanascreenshot.png)
 
-# TODO:
-- put data into VictoriaMetrics
-- setup Grafana to display data from VictoriaMetrics
-- mabye make it seperate the files every x amount of time just in case. so it makes multiple files instead of one.
+grafana on port `3000`<br>victoriametrics on port `8428`
+
+[VictoriaMetrics Download](https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/v1.152.0/victoria-metrics-windows-amd64-v1.152.0.zip)
+<br>
+[Grafana Download](https://dl.grafana.com/grafana-enterprise/release/13.2.2/grafana-enterprise_13.2.2_34846740809_windows_amd64.tar.gz)

@@ -123,7 +123,7 @@ func writeToVictoria(status Status) {
 	} else {
 		outputValue = 0
 	}
-	request := fmt.Sprintf("shelly apower=%.2f,voltage=%.2f,current=%.3f,energy=%.3f,output=%d %d", status.Apower, status.Voltage, status.Current, status.Aenergy.Total, outputValue, status.TimeStamp.UnixNano())
+	request := fmt.Sprintf("shelly output=%d,apower=%v,voltage=%v,current=%v,aenergy_total=%v,temperature_tC=%v,temperature_tF=%v %d", outputValue, status.Apower, status.Voltage, status.Current, status.Aenergy.Total, status.Temperature.TC, status.Temperature.TF, status.TimeStamp.UnixNano())
 
 	const victoriaAddress = "http://127.0.0.1:8428/write"
 	byteRequest := []byte(request)
