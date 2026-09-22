@@ -41,6 +41,11 @@ output example:
 3. Run the .exe file. Windows will show a popup saying the program is untrusted. click i know what im doing / read more and click run anyways
 4. the program will start printing info to the terminal while simultaneously saving the data to a file next to the .exe
 
+# For live display:
+- grafana enterprise can be ran as a standalone portable without install (port 3000)
+- victoriametrics is a single binary acting as a prometheus datasource
+- NetData can be a lighter, simpler alternative to grafana. smaller download but im less familiar with it.
+
 # TODO:
 - put data into VictoriaMetrics
 - setup Grafana to display data from VictoriaMetrics
