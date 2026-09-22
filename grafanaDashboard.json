@@ -5,8 +5,8 @@
     "name": "adr7qsv",
     "namespace": "default",
     "uid": "5db91706-3d97-40ef-a600-321525d5a8b2",
-    "resourceVersion": "1790100996088019",
-    "generation": 24,
+    "resourceVersion": "1790101272159987",
+    "generation": 26,
     "creationTimestamp": "2026-09-22T17:15:58Z",
     "labels": {
       "grafana.app/deprecatedInternalID": "3769395647164416"
@@ -15,7 +15,7 @@
       "grafana.app/createdBy": "user:ffz19bir6i8zkf",
       "grafana.app/saved-from-ui": "Grafana v13.2.2 (1bea008f7e)",
       "grafana.app/updatedBy": "user:ffz19bir6i8zkf",
-      "grafana.app/updatedTimestamp": "2026-09-22T18:16:36Z"
+      "grafana.app/updatedTimestamp": "2026-09-22T18:21:12Z"
     }
   },
   "spec": {
@@ -604,7 +604,7 @@
         "kind": "Panel",
         "spec": {
           "id": 6,
-          "title": "New panel",
+          "title": "Temperature C",
           "description": "",
           "links": [],
           "data": {
@@ -807,9 +807,9 @@
     "tags": [],
     "timeSettings": {
       "timezone": "browser",
-      "from": "now-5m",
+      "from": "now-15m",
       "to": "now",
-      "autoRefresh": "5s",
+      "autoRefresh": "30s",
       "autoRefreshIntervals": [
         "5s",
         "10s",
